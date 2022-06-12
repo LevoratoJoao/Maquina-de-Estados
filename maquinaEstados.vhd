@@ -78,7 +78,7 @@ ARCHITECTURE main of maquinaEstados is
 		-- preco recebe o valor do preco do produto de acordo com a soma das moedas inseridas acima (moeda de 25 = 1, moeda de 50 = 2, moeda de 100 = 4)
 		-- agua: 1.50 // refri: 3.00 // salgadinho: 3.50 // chocolate: 3.75
 		-----------------------------------------------------------------------
-		IF opcao1 = '1' AND opcao2 = '1' THEN
+		IF opcao1 = '1' AND opcao2 = '1' THEN --botões 
 			escolha01 := 1;
 			preco01 := 6;
 		ELSE
@@ -86,7 +86,7 @@ ARCHITECTURE main of maquinaEstados is
 			preco01 := 0;
 		END IF;
 		-----------------------------------------------------------------------
-		IF opcao1 = '1' AND opcao2 = '0' THEN
+		IF opcao1 = '1' AND opcao2 = '0' THEN --botões
 			escolha02 := 2;
 			preco02 := 12;
 		else
@@ -94,7 +94,7 @@ ARCHITECTURE main of maquinaEstados is
 			preco02 := 0;
 		END IF;
 		-----------------------------------------------------------------------
-		IF opcao1 = '0' AND opcao2 = '1' THEN
+		IF opcao1 = '0' AND opcao2 = '1' THEN --botões
 			escolha03 := 3;
 			preco03 := 14;
 		ELSE
@@ -102,7 +102,7 @@ ARCHITECTURE main of maquinaEstados is
 			preco03 := 0;
 		END IF;
 		-----------------------------------------------------------------------
-		IF opcao1 = '0' AND opcao2 = '0' THEN
+		IF opcao1 = '0' AND opcao2 = '0' THEN --botões
 			escolha04 := 4;
 			preco04 := 15;
 		ELSE
@@ -110,9 +110,13 @@ ARCHITECTURE main of maquinaEstados is
 			preco04 := 0;
 		END IF;
 		-----------------------------------------------------------------------
+			
 		preco_total := preco01 + preco02 + preco03 + preco04; -- soma dos precos dos produtos
+
 		dinheiro_total := moeda25_1 + moeda25_2 + moeda25_3 + moeda50_1 + moeda50_2 + moeda50_3 + moeda100_1 + moeda100_2 + moeda100_3; -- soma das moedas inseridas
+
 		escolha := escolha01 + escolha02 + escolha03 + escolha04; -- soma das escolhas de produtos
+
 		-----------------------------------------------------------------------
 		IF moedas(9) = '1' THEN -- se o pino 9 for 1
 			IF dinheiro_total >= preco_total and preco_total > 0 THEN -- se o dinheiro inserido for maior ou igual ao preco total e o preco total for maior que 0
