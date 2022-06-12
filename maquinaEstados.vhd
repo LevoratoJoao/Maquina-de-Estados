@@ -1,154 +1,234 @@
 LIBRARY IEEE;
 USE IEEE.std_logic_1164.ALL;
 USE IEEE.numeric_std.ALL;
-use IEEE.STD_LOGIC_signed.ALL;
 
-ENTITY maquina IS
+ENTITY maquinaEstados IS
 	PORT(
-		A, B, C, D, E, F, G	:		IN BIT;--Tres primeiros - Moedas, Quatro ultimos - Produto
-		R					:		IN BIT;--Reset
-        Dled, Eled, Fled, Gled		    :		OUT BIT;
-		  auxdin			    :		OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-		  auxtroco			    :		OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-		  troco1			    :		OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-		  troco2			    :		OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-		  troco3			    :		OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-		  diheiro1			    :		OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-		  diheiro2			    :		OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-		  diheiro3			    :		OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-		  Display1			    :		OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
-        Display2			    :		OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
-        Display3			    :		OUT STD_LOGIC_VECTOR(6 DOWNTO 0)
+		moedas                  : 		IN STD_LOGIC_VECTOR(9 DOWNTO 0); -- vetor e moedas das chaves (0-9)
+		opcao1, opcao2          : 		IN BIT; -- opcoes de produtos (00 - agua, 01 - reri, 10 - salgadinho, 11 - chocolate)
+		Display1			    :		OUT STD_LOGIC_VECTOR(6 DOWNTO 0); --display preco
+		Display2			    :		OUT STD_LOGIC_VECTOR(6 DOWNTO 0); --display preco
+		Display3			    :		OUT STD_LOGIC_VECTOR(6 DOWNTO 0); --display preco
+		Display4			    :		OUT STD_LOGIC_VECTOR(6 DOWNTO 0) -- prouto (A - agua, R - reri, S - salgadinho, C - chocolate)
 	);
-END ENTITY maquina;
+END ENTITY maquinaEstados;
 
-ARCHITECTURE main of maquina is
+ARCHITECTURE main of maquinaEstados is
 	BEGIN
-		-- Especificamos as entradas que usaremos no codigo sequencial
-		PROCESS(A, B, C, D, E, F, G, R)
-			-- Recebera a saida de cada somador
-			VARIABLE dinheiro : integer;
-			-- Recebera o resto de cada somador 
-			VARIABLE troco : integer;
-		BEGIN
-			-- Colocando Moeadas
-			if A <= '1' then
-				dinheiro:=25;
-			end if ;
-			if B <= '1' then
-				dinheiro:=50;
-			end if ;
-			if C <= '1' then
-				dinheiro:=100;
-			end if ;
-			
-			
-			
+		PROCESS(moedas, opcao1, opcao2) is
+			VARIABLE escolha01, escolha02, escolha03, escolha04, escolha : integer := 0;
+			VARIABLE moeda25_1, moeda25_2, moeda25_3, moeda50_1, moeda50_2, moeda50_3, moeda100_1, moeda100_2, moeda100_3, dinheiro_total : integer;
+			VARIABLE preco, preco01, preco02, preco03, preco04, preco_total : integer;
 
-			--Mostrando opcoes disponiveis de acordo com a quantida de dinheiro inserida
-			if dinheiro = 150 then
-				Dled <= '1';
-			end if ;
-			if dinheiro = 300 then
-				Eled <= '1';
-			end if ;
-			if dinheiro = 350 then
-				Fled <= '1';
-				end if ;
-			if dinheiro = 375 then
-				Gled <= '1';
-			end if ;
-			
-			auxdin <= dinheiro;
-			dinheiro1 := to_integer(auxdin / 100);
-			auxdin := auxdin - (dinheiro1 * 100);
-			dinheiro2 := to_integer(auxdin / 10);
-			auxdin := auxdin - (dinheiro2 * 10);
-			dinheiro3 := to_integer(auxdin / 1);
+	BEGIN
+		CASE moedas(0) IS
+			WHEN '1' => moeda25_1 := 1;
+			WHEN others => moeda25_1 := 0;
+		END CASE;
+		case moedas(1) IS
+			WHEN '1' => moeda25_2 := 1;
+			WHEN OTHERS => moeda25_2 := 0;
+		END CASE;
 
-			-- Escolhendo produto
-			if D = '1' then
-				troco := dinheiro - 150;
-			end if ;
-			if E = '1' then
-				troco := dinheiro - 300;
-			end if ;
-			if F = '1' then
-				troco := dinheiro - 350;
-			end if ;
-			if G = '1' then
-				troco := dinheiro - 375;
-			end if ;
-			
-			auxtroco <= troco;
-			troco1 := to_integer(auxtroco / 100);
-			auxtroco := auxtroco - (torco1 * 100);
-			troco2 := to_integer(auxtroco / 10);
-			auxtroco := auxtroco - (troco2 * 10);
-			troco3 := to_integer(auxtroco / 1);
+		case moedas(2) IS
+			WHEN '1' => moeda25_3 := 1;
+			WHEN OTHERS => moeda25_3 := 0;
+		END CASE;
+
+		case moedas(3) IS
+			WHEN '1' => moeda50_1 := 2;
+			WHEN OTHERS => moeda50_1 := 0;
+		END CASE;
+
+		case moedas(4) IS
+			WHEN '1' => moeda50_2 := 2;
+			WHEN OTHERS => moeda50_2 := 0;
+		END CASE;
+
+		CASE moedas(5) IS
+			WHEN '1' => moeda50_3 := 2;
+			WHEN OTHERS => moeda50_3 := 0;
+		END CASE;
+
+		CASE moedas(6) is
+			WHEN '1' => moeda100_1 := 4;
+			WHEN OTHERS => moeda100_1 := 0;
+		END CASE;
+
+		CASE moedas(7) is
+			WHEN '1' => moeda100_2 := 4;
+			WHEN OTHERS => moeda100_2 := 0;
+		END CASE;
+
+		CASE moedas(8) is
+			WHEN '1' => moeda100_3 := 4;
+			WHEN OTHERS => moeda100_3 := 0;
+		END CASE;
 
 
-			--R - Reset
+		IF opcao1 = '1' AND opcao2 = '1' THEN
+			escolha01 := 1;
+			preco01 := 6;
+		ELSE
+			escolha01 := 0;
+			preco01 := 0;
+		END IF;
 
-			-- Exibimos o input no display de sete segmentos
-			--Como dividir o numero no display em tres partes
-			CASE dinheiro1 IS
-				WHEN "0000" => Display1 <= "1000000"; -- "0"
-			 	WHEN "0101" => Display1 <= "0010010"; -- "5"
+		IF opcao1 = '1' AND opcao2 = '0' THEN
+			escolha02 := 2;
+			preco02 := 12;
+		else
+			escolha02 := 0;
+			preco02 := 0;
+		END IF;
+
+		IF opcao1 = '0' AND opcao2 = '1' THEN
+			escolha03 := 3;
+			preco03 := 14;
+		ELSE
+			escolha03 := 0;
+			preco03 := 0;
+		END IF;
+
+		IF opcao1 = '0' AND opcao2 = '0' THEN
+			escolha04 := 4;
+			preco04 := 15;
+		ELSE
+			escolha04 := 0;
+			preco04 := 0;
+		END IF;
+
+		preco_total := preco01 + preco02 + preco03 + preco04;
+		dinheiro_total := moeda25_1 + moeda25_2 + moeda25_3 + moeda50_1 + moeda50_2 + moeda50_3 + moeda100_1 + moeda100_2 + moeda100_3;
+		escolha := escolha01 + escolha02 + escolha03 + escolha04;
+
+		IF moedas(9) = '1' THEN
+			IF dinheiro_total >= preco_total and preco_total > 0 THEN
+				preco := preco_total;
+				dinheiro_total := dinheiro_total - preco_total;
+			END IF;
+		END IF;
+
+		case (dinheiro_total)is -- divide o valor anterior para ver o total de moeda
+			WHEN 0 =>
+				Display3 <= "1000000"; -- mostra 0
+				Display2 <= "1000000"; -- mostra 0
+				Display1 <= "1000000"; -- mostra 0
+			-----------------------------------------------------------------------
+			WHEN 1 => -- mostra 0.25
+				Display3 <= "1000000"; -- mostra 0
+				Display1 <= "0010010"; -- mostra 0,05
+				Display2 <= "0100100"; -- mostra 0,20
+			-----------------------------------------------------------------------
+			WHEN 2 => -- mostra 0.5
+				Display3 <= "1000000"; -- mostra 0
+				Display1 <= "1000000"; -- mostra 0,00
+				Display2 <= "0010010"; -- mostra 0,5
+			-----------------------------------------------------------------------
+			WHEN 3 => -- mostra 0.75
+				Display3 <= "1000000"; -- mostra 0
+				Display1 <= "0010010"; -- mostra 0,05
+				Display2 <= "1111000"; -- mostra 0,7
+			-----------------------------------------------------------------------
+			WHEN 4 => -- mostra 1.0
+				Display3 <= "1111001"; -- mostra 1
+				Display1 <= "1000000"; -- mostra 0,00
+				Display2 <= "1000000"; -- mostra 0,0
+			-----------------------------------------------------------------------
+			WHEN 5 => -- mostra 1.25
+				Display3 <= "1111001"; -- mostra 1
+				Display1 <= "0010010"; -- mostra 0,05
+				Display2 <= "0100100"; -- mostra 0,2
+			-----------------------------------------------------------------------
+			WHEN 6 => -- mostra 1.5
+				Display3 <= "1111001"; -- mostra 1
+				Display1 <= "1000000"; -- mostra 0,00
+				Display2 <= "0010010"; -- mostra 0,5
+			-----------------------------------------------------------------------
+			WHEN 7 => -- mostra 1.75
+				Display3 <= "1111001"; -- mostra 1
+				Display1 <= "0010010"; -- mostra 0,05
+				Display2 <= "1111000"; -- mostra 0,7
+			-----------------------------------------------------------------------
+			WHEN 8  => -- mostra 2.0
+				Display3 <= "0100100";-- mostra 2
+				Display1 <= "1000000"; -- mostra 0,00
+				Display2 <= "1000000"; -- mostra 0,0
+			-----------------------------------------------------------------------
+			WHEN 9  => -- mostra 2.25
+				Display3 <= "0100100"; -- mostra 2
+				Display1 <= "0010010"; -- mostra 0,05
+				Display2 <= "0100100"; -- mostra 0,2
+			-----------------------------------------------------------------------
+			WHEN 10  => -- mostra 2.5
+				Display3 <= "0100100"; -- mostra 2
+				Display1 <= "1000000"; -- mostra 0,00
+				Display2 <= "0010010"; -- mostra 0,5
+			-----------------------------------------------------------------------
+			WHEN 11  => -- mostra 2.75
+				Display3 <= "0100100"; -- mostra 2
+				Display1 <= "0010010"; -- mostra 0,05
+				Display2 <= "1111000"; -- mostra 0,7
+			-----------------------------------------------------------------------
+			WHEN 12  => -- mostra 3.0
+				Display3 <= "0110000"; -- mostra 3
+				Display1 <= "1000000"; -- mostra 0,00
+				Display2 <= "1000000"; -- mostra 0,0
+			-----------------------------------------------------------------------
+			WHEN 13  => -- mostra 3.25
+				Display3 <= "0110000"; -- mostra 3
+				Display1 <= "0010010"; -- mostra 0,05
+				Display2 <= "0100100"; -- mostra 0,2
+			-----------------------------------------------------------------------
+			WHEN 14  => -- mostra 3.5
+				Display3 <= "0110000"; -- mostra 3
+				Display1 <= "1000000"; -- mostra 0,00
+				Display2 <= "0010010"; -- mostra 0,5
+			-----------------------------------------------------------------------
+			WHEN 15  => -- mostra 3.75
+				Display3 <= "0110000"; -- mostra 3
+				Display1 <= "0010010"; -- mostra 0,05
+				Display2 <= "1111000"; -- mostra 0,7
+			-----------------------------------------------------------------------
+			WHEN 16  => -- mostra 4.0
+				Display3 <= "0011001"; -- mostra 4
+				Display1 <= "1000000"; -- mostra 0,00
+				Display2 <= "1000000"; -- mostra 0,0
+			-----------------------------------------------------------------------
+			WHEN 17  => -- mostra 4.25
+				Display3 <= "0011001"; -- mostra 4
+				Display1 <= "0010010"; -- mostra 0,05
+				Display2 <= "0100100"; -- mostra 0,2
+			-----------------------------------------------------------------------
+			WHEN 18  => -- mostra 4.5
+				Display3 <= "0011001"; -- mostra 4
+				Display1 <= "1000000"; -- mostra 0,00
+				Display2 <= "0010010"; -- mostra 0,5
+			-----------------------------------------------------------------------
+			WHEN 19  => -- mostra 4.75
+				Display3 <= "0011001"; -- mostra 4
+				Display1 <= "0010010"; -- mostra 0,05
+				Display2 <= "1111000"; -- mostra 0,7
+			-----------------------------------------------------------------------
+			WHEN 20  => -- mostra 5.0
+				Display3 <= "0010010"; -- mostra 5
+				Display1 <= "1000000"; -- mostra 0,00
+				Display2 <= "1000000"; -- mostra 0,0
+			-----------------------------------------------------------------------
+			WHEN 21  => -- mostra 5.25
+				Display3 <= "0010010"; -- mostra 5
+				Display1 <= "0010010"; -- mostra 0,05
+				Display2 <= "0100100"; -- mostra 0,2
+			-----------------------------------------------------------------------
 			WHEN OTHERS => NULL;
-			END CASE;
-
-			CASE dinheiro2 IS
-				WHEN "0000" => Display2 <= "1000000"; -- "0"
-				WHEN "0010" => Display2 <= "0100100"; -- "2"
-			 	WHEN "0101" => Display2 <= "0010010"; -- "5"
-			 	WHEN "0111" => Display2 <= "1111000"; -- "7"
+			----------------------------------------------------------------------------------------------------------
+		END CASE;
+		CASE escolha IS
+			WHEN 1 => Display4 <= "0001000"; --Agua
+			WHEN 2 => Display4 <= "0101111"; --Refrigerante
+			WHEN 3 => Display4 <= "0010010"; --Salgadinho
+			WHEN 4 => Display4 <= "1000110"; --Chocolate
 			WHEN OTHERS => NULL;
-			END CASE;
-
-			CASE dinheiro3 IS
-				WHEN "0000" => Display3 <= "1000000"; -- "0"
-				WHEN "0001" => Display3 <= "1111001"; -- "1"
-				WHEN "0010" => Display3 <= "0100100"; -- "2"
-				WHEN "0011" => Display3 <= "0110000"; -- "3"
-				WHEN "0100" => Display3 <= "0011001"; -- "4"
-				WHEN "0101" => Display3 <= "0010010"; -- "5"
-				WHEN "0110" => Display3 <= "0000010"; -- "6"
-				WHEN "0111" => Display3 <= "1111000"; -- "7"
-				WHEN "1000" => Display3 <= "0000000"; -- "8"
-				WHEN "1001" => Display3 <= "0010000"; -- "9"
-				WHEN OTHERS => NULL;
-			END CASE;
-			
-			
-
-            CASE troco IS
-				WHEN "0000" => Display1 <= "1000000"; -- "0"
-			 	WHEN "0101" => Display1 <= "0010010"; -- "5"
-			WHEN OTHERS => NULL;
-			END CASE;
-
-			CASE troco IS
-				WHEN "0000" => Display2 <= "1000000"; -- "0"
-				WHEN "0010" => Display2 <= "0100100"; -- "2"
-			 	WHEN "0101" => Display2 <= "0010010"; -- "5"
-			 	WHEN "0111" => Display2 <= "1111000"; -- "7"
-			WHEN OTHERS => NULL;
-			END CASE;
-
-			CASE troco IS
-				WHEN "0000" => Display3 <= "1000000"; -- "0"
-				WHEN "0001" => Display3 <= "1111001"; -- "1"
-				WHEN "0010" => Display3 <= "0100100"; -- "2"
-				WHEN "0011" => Display3 <= "0110000"; -- "3"
-				WHEN "0100" => Display3 <= "0011001"; -- "4"
-				WHEN "0101" => Display3 <= "0010010"; -- "5"
-				WHEN "0110" => Display3 <= "0000010"; -- "6"
-				WHEN "0111" => Display3 <= "1111000"; -- "7"
-				WHEN "1000" => Display3 <= "0000000"; -- "8"
-				WHEN "1001" => Display3 <= "0010000"; -- "9"
-				WHEN OTHERS => NULL;
-			END CASE;
-
-		END PROCESS;
+		END CASE;
+	END PROCESS;
 END ARCHITECTURE;
