@@ -25,6 +25,7 @@ ARCHITECTURE main of maquinaEstados is
 		-- vetor de moedas representando um pino (0-9)
 		-- 3 moedas por pino (25, 50, 100)
 		-- caso pino (0-9) for 1, aumenta 1 na respectiva quantidade de moeda
+		-- agua: 1.50 // refri: 3.00 // salgadinho: 3.50 // chocolate: 3.75
 		-----------------------------------------------------------------------
 		CASE moedas(0) IS
 			WHEN '1' => moeda25_1 := 1;
@@ -75,6 +76,7 @@ ARCHITECTURE main of maquinaEstados is
 		-- 11 = agua - 6 // 01 = reri - 12 // 10 = salgadinho - 14 // 00 = chocolate - 15
 		-- variavel escolha recebe o valor da opcao de produto
 		-- preco recebe o valor do preco do produto de acordo com a soma das moedas inseridas acima (moeda de 25 = 1, moeda de 50 = 2, moeda de 100 = 4)
+		-- agua: 1.50 // refri: 3.00 // salgadinho: 3.50 // chocolate: 3.75
 		-----------------------------------------------------------------------
 		IF opcao1 = '1' AND opcao2 = '1' THEN
 			escolha01 := 1;
@@ -122,6 +124,7 @@ ARCHITECTURE main of maquinaEstados is
 		-- mostra no display o valor do dinheiro total conforme as moedas sao insirias
 		-- numero de 3 digitos, cada digito sendo mostrado em um display separado
 		-- obs: o valor do dinheiro total é alterado se a condição acima é satisfeita e assim então irá mostrar o troco do cliente
+		-- agua: 1.50 // refri: 3.00 // salgadinho: 3.50 // chocolate: 3.75
 		-----------------------------------------------------------------------
 		case (dinheiro_total) is
 			WHEN 0 =>
@@ -239,6 +242,7 @@ ARCHITECTURE main of maquinaEstados is
 
 		-- DISPLAY DA ESCOLHA -----------------------------------------------------
 		-- mostra a letra da escolha no display
+		-- agua: 1.50 // refri: 3.00 // salgadinho: 3.50 // chocolate: 3.75
 		---------------------------------------------------------------------------
 		CASE escolha IS
 			WHEN 1 => Display4 <= "0001000"; -- Agua
