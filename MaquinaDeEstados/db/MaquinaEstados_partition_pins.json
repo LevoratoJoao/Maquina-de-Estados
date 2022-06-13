@@ -1,0 +1,149 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "Display1[1]",
+					"strict" : false
+				},
+				{
+					"name" : "Display1[4]",
+					"strict" : false
+				},
+				{
+					"name" : "Display1[6]",
+					"strict" : false
+				},
+				{
+					"name" : "Display2[1]",
+					"strict" : false
+				},
+				{
+					"name" : "Display2[2]",
+					"strict" : false
+				},
+				{
+					"name" : "Display2[3]",
+					"strict" : false
+				},
+				{
+					"name" : "Display2[4]",
+					"strict" : false
+				},
+				{
+					"name" : "Display2[5]",
+					"strict" : false
+				},
+				{
+					"name" : "Display2[6]",
+					"strict" : false
+				},
+				{
+					"name" : "Display3[0]",
+					"strict" : false
+				},
+				{
+					"name" : "Display3[1]",
+					"strict" : false
+				},
+				{
+					"name" : "Display3[2]",
+					"strict" : false
+				},
+				{
+					"name" : "Display3[3]",
+					"strict" : false
+				},
+				{
+					"name" : "Display3[4]",
+					"strict" : false
+				},
+				{
+					"name" : "Display3[5]",
+					"strict" : false
+				},
+				{
+					"name" : "Display3[6]",
+					"strict" : false
+				},
+				{
+					"name" : "Display4[0]",
+					"strict" : false
+				},
+				{
+					"name" : "Display4[1]",
+					"strict" : false
+				},
+				{
+					"name" : "Display4[2]",
+					"strict" : false
+				},
+				{
+					"name" : "Display4[3]",
+					"strict" : false
+				},
+				{
+					"name" : "Display4[4]",
+					"strict" : false
+				},
+				{
+					"name" : "Display4[5]",
+					"strict" : false
+				},
+				{
+					"name" : "Display4[6]",
+					"strict" : false
+				},
+				{
+					"name" : "opcao2",
+					"strict" : false
+				},
+				{
+					"name" : "opcao1",
+					"strict" : false
+				},
+				{
+					"name" : "moedas[3]",
+					"strict" : false
+				},
+				{
+					"name" : "moedas[0]",
+					"strict" : false
+				},
+				{
+					"name" : "moedas[1]",
+					"strict" : false
+				},
+				{
+					"name" : "moedas[2]",
+					"strict" : false
+				},
+				{
+					"name" : "moedas[4]",
+					"strict" : false
+				},
+				{
+					"name" : "moedas[5]",
+					"strict" : false
+				},
+				{
+					"name" : "moedas[9]",
+					"strict" : false
+				},
+				{
+					"name" : "moedas[6]",
+					"strict" : false
+				},
+				{
+					"name" : "moedas[7]",
+					"strict" : false
+				},
+				{
+					"name" : "moedas[8]",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

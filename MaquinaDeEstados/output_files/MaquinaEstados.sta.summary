@@ -1,0 +1,41 @@
+------------------------------------------------------------
+Timing Analyzer Summary
+------------------------------------------------------------
+
+Type  : Slow 1200mV 85C Model Setup 'moedas[0]'
+Slack : -11.883
+TNS   : -141.782
+
+Type  : Slow 1200mV 85C Model Hold 'moedas[0]'
+Slack : 1.852
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'moedas[0]'
+Slack : -3.802
+TNS   : -645.611
+
+Type  : Slow 1200mV 0C Model Setup 'moedas[0]'
+Slack : -10.833
+TNS   : -130.875
+
+Type  : Slow 1200mV 0C Model Hold 'moedas[0]'
+Slack : 1.607
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'moedas[0]'
+Slack : -3.371
+TNS   : -576.108
+
+Type  : Fast 1200mV 0C Model Setup 'moedas[0]'
+Slack : -5.900
+TNS   : -66.156
+
+Type  : Fast 1200mV 0C Model Hold 'moedas[0]'
+Slack : 0.768
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'moedas[0]'
+Slack : -3.000
+TNS   : -196.995
+
+------------------------------------------------------------
